@@ -93,5 +93,20 @@ Command "/docker-entrypoint.…"
 Created 2021-03-02 12:58:19 +0000 GMT
 Status  Up 14 minutes
 
+#to remove information
+export FORMAT="ID\t{{.ID}}\nName\t{{.Names}}\nImage\t{{.Image}}\nPorts\t{{.Ports}}\nCommand\t{{.Command}}\nCreated\t{{.CreatedAt}}\nStatus\t{{.Status}}\n"
+
+#now that the format is stored in the variable
+
+docker ps --format=$FORMAT
+#expected output
+
+ID      2b639b72a1e2
+Name    website
+Image   nginx:latest
+Ports   0.0.0.0:3000->80/tcp
+Command "/docker-entrypoint.…"
+Created 2021-03-02 12:58:19 +0000 GMT
+Status  Up 14 minutes
 
 ```
