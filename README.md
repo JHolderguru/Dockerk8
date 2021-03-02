@@ -110,3 +110,11 @@ Created 2021-03-02 12:58:19 +0000 GMT
 Status  Up 14 minutes
 
 ```
+
+#### 3.Volumes - allow us to share Data or folders between conainers. Through the container and the file system we create a volume.
+
+```python
+
+
+
+```
