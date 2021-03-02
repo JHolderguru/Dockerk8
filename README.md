@@ -38,5 +38,25 @@ docker run -d -p 8080:83 nginx:latest
 #or
 docker run -d -p 3000:80 nginx:latest
 
+#or map two ports
+docker run -d -p 3000:80 -p 8083:80 nginx:latest
+
+```
+
+#### 3. Managing your containers, Stop remove start and Name your containers
+
+```python
+
+#Stop
+docker stop 1dd1d07511a9 #or name of container
+
+#start
+docker start 1dd1d07511a9 #or name of container
+
+ #for more information running and non running containers
+ docker --help
+
+#delete container
+docker rm 1dd1d07511a9 #or purse in name instead of ID
 
 ```
