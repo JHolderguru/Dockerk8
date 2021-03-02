@@ -14,5 +14,11 @@ docker run nginx:latest
 #open a separate command to view the run time
 docker container ls
 
+#running the container in detached mode
+docker run - d nginx:latest
+
+#Check which containers running
+docker ps
+
 
 ```
