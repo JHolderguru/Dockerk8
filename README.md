@@ -79,5 +79,19 @@ docker run --name website -d -p 3000:80 -p 8083:80 nginx:latest
 #Check
 docker ps #should see the name as website
 
+#stopping
+docker stop website
+
+#Using a format
+docker ps --format="ID\t{{.ID}}\nName\t{{.Names}}\nImage\t{{.Image}}\nPorts\t{{.Ports}}\nCommand\t{{.Command}}\nCreated\t{{.CreatedAt}}\nStatus\t{{.Status}}\n"
+#expected output
+ID      2b639b72a1e2
+Name    website
+Image   nginx:latest
+Ports   0.0.0.0:3000->80/tcp
+Command "/docker-entrypoint.…"
+Created 2021-03-02 12:58:19 +0000 GMT
+Status  Up 14 minutes
+
 
 ```
