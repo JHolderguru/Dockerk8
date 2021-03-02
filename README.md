@@ -55,8 +55,29 @@ docker start 1dd1d07511a9 #or name of container
 
  #for more information running and non running containers
  docker --help
+ docker ps -a #view all containers
 
 #delete container
 docker rm 1dd1d07511a9 #or purse in name instead of ID
+
+#remove multiple containers
+docker ps -aq #list all containers by ID
+docker rm $(docker ps -aq)#pass the argument of all that would have been listed, make sure none of the containers are running unless-docker rm -f $(docker ps -aq)
+
+
+#verfiy there are no containers left
+docker ps -a
+
+# starting a containers and the ports you want
+
+docker run -d -p 3000:80 -p 8083:80 nginx:latest
+
+#starting the container but naming it website
+
+docker run --name website -d -p 3000:80 -p 8083:80 nginx:latest
+
+#Check
+docker ps #should see the name as website
+
 
 ```
