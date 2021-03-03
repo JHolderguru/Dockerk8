@@ -113,8 +113,10 @@ Status  Up 14 minutes
 
 #### 3.Volumes - allow us to share Data or folders between conainers. Through the container and the file system we create a volume.
 
-```python
 
+```python
+#mounting a index.html folder to the nginx container
+docker run --name website -v $(pwd):usr/share/nginx/html:ro -d -p 8083:80 nginx
 
 
 ```
