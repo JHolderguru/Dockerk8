@@ -130,16 +130,22 @@ docker exec -it website bash
 ctrl d to exit
 #to get into the container with more than just readme files
 
-docker run --name website -v $(pwd):/usr/share/nginx/html: -d -p 8083:80 nginx
+docker run --name website -v /$PWD:/usr/share/nginx/html: -d -p 8083:80 nginx
 
 #create a file in the container
 docker exec -it website bash
 #nevigate to the dir
-usr/share/nginx/html: -d -p 8083:80 nginx
+usr/share/nginx/html
 #see the container contents in dir
 ls
 #create new files
 touch about.html
+
+# the file should appear in out local directory
+
+#using a bootstrap website
+https://startbootstrap.com/theme/grayscale
+
 
 
 ```
