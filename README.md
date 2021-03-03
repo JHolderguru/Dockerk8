@@ -115,8 +115,11 @@ Status  Up 14 minutes
 
 
 ```python
+
+
+
 #mounting a index.html folder to the nginx container
-docker run --name website -v $(pwd):/usr/share/nginx/html:ro -d -p 8083:80 nginx
+docker run --name website -v /$PWD:/usr/share/nginx/html:ro -d -p 8083:80 nginx
 
 
 #to execute this in a interactive way(get into th container)
@@ -125,6 +128,18 @@ docker exec -it website bash
 #ls to see the files inside container
 
 ctrl d to exit
+#to get into the container with more than just readme files
+
+docker run --name website -v $(pwd):/usr/share/nginx/html: -d -p 8083:80 nginx
+
+#create a file in the container
+docker exec -it website bash
+#nevigate to the dir
+usr/share/nginx/html: -d -p 8083:80 nginx
+#see the container contents in dir
+ls
+#create new files
+touch about.html
 
 
 ```
