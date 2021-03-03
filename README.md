@@ -116,7 +116,8 @@ Status  Up 14 minutes
 
 ```python
 #mounting a index.html folder to the nginx container
-docker run --name website -v $(pwd):usr/share/nginx/html:ro -d -p 8083:80 nginx
+docker run --name website -v $(pwd):/usr/share/nginx/html:ro -d -p 8083:80 nginx
+
 
 
 ```
