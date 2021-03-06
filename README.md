@@ -184,3 +184,20 @@ docker run --name website -p 8080:80 -d website:latest
 docker pull node:alpine
 
 ```
+#### 6.Versioning
+incase you break a button on your website but still want to revert to the previous version #powerOfVersioning
+```python
+docker tag auntyb-website:latest auntyb-website:latest
+
+docker tag auntyb-website-1: auntyb-website:1
+
+
+#run them on different Ports
+docker run --name auntyb-website-latest -p 8080:80 -d auntyb-website:latest
+
+docker run --name auntyb-website-1 -p 8081:80 -d auntyb-website:1
+
+
+
+
+```
