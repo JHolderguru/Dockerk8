@@ -149,7 +149,7 @@ https://startbootstrap.com/theme/grayscale
 
 ```
 
-#### 4.Sharing volumes between our website container and the container.
+#### 4.Sharing volumes between our website container and a copy container.
 
 ```python
 docker run --name website-copy --volumes website -d -p 8081:80 nginx
@@ -157,5 +157,14 @@ docker run --name website-copy --volumes website -d -p 8081:80 nginx
 #check containers running
 docker ps --format=$FORMAT
 
+
+```
+
+#### 5.Recreating this using our own image.
+
+open up the IDE
+```python
+FROM nginx:latest
+ADD . /usr/share/nginx/html
 
 ```
