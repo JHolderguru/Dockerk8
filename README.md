@@ -162,9 +162,15 @@ docker ps --format=$FORMAT
 
 #### 5.Recreating this using our own image.
 
-open up the IDE
+
+open up the IDE and create a docker file in the website folder.
+
 ```python
 FROM nginx:latest
 ADD . /usr/share/nginx/html
+
+# open the CLI
+docker build --tag websitelatest .
+#the . will look for the contents in that folder and build using the contents of the folder you are in i,e index.html
 
 ```
