@@ -171,6 +171,12 @@ ADD . /usr/share/nginx/html
 
 # open the CLI
 docker build --tag websitelatest .
-#the . will look for the contents in that folder and build using the contents of the folder you are in i,e index.html
+#the . will look for the contents in that folder and build using the contents of the folder you are in i,e index.htmls
+#check the image
+docker image ls
+
+#run the container
+#make make sure no images are running
+docker run --name website -p 8080:80 -d website:latest
 
 ```
