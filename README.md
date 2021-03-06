@@ -179,4 +179,8 @@ docker image ls
 #make make sure no images are running
 docker run --name website -p 8080:80 -d website:latest
 
+#reduce the size by getting an alphine version https://www.alpinelinux.org/about/
+
+docker pull node:alpine
+
 ```
