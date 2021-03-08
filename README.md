@@ -197,6 +197,17 @@ docker run --name auntyb-website-latest -p 8080:80 -d auntyb-website:latest
 
 docker run --name auntyb-website-1 -p 8081:80 -d auntyb-website:1
 
+#pushing the repos to dockerhub
+#1. Log in Dockerhub create a repo and name it.
+ docker image ls
+
+#tag the website to the repo name
+ docker tag auntyb-website:latest jholderguru/website:latest
+ docker tag auntyb-website:1 jholderguru/website:1
+
+ #push images to the hub
+ docker push jholderguru/website:latest
+ docker push jholderguru/website:1
 
 
 
