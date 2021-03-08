@@ -210,9 +210,9 @@ docker run --name auntyb-website-1 -p 8081:80 -d auntyb-website:1
  docker push jholderguru/website:1
 
  #pulling the images from the hub
-
  docker pull jholderguru/website
 
-
+#touble shoot
+docket inspect (id of container)
 
 ```
