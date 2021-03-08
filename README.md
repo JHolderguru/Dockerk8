@@ -215,4 +215,5 @@ docker run --name auntyb-website-1 -p 8081:80 -d auntyb-website:1
 #touble shoot
 docket inspect (id of container)
 
+docker logs (id of container)
 ```
