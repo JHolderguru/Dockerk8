@@ -385,18 +385,19 @@ spec:
             secretKeyRef:
               name: mongodb-secret
               key: mongo-root-password
+#this is a new service ---(separates a new file) created at step 12
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mongodb-service
 spec:
-  selector:
+  selector:#choosing from above mongodb
     app: mongodb
   ports:
     - protocol: TCP
-      port: 27017
-      targetPort: 27017
+      port: 27017 #service port
+      targetPort: 27017 #container port
 
 
 ```
@@ -433,5 +434,147 @@ kubectl get secret
 #deployment file is ready
 kubetl apply -f mongo-db-deployment.yaml
 
+#may take  while kubectl describe pod {podname}
+kubectl describe pod
+
+###creating external service
+
+#add to step 9 or mongo-deployment yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017 #service port can be different
+      targetPort: 27017 #container port
+
+
+
+```
+#### 12. kubectl apply -f mongo-deployment.yaml
+```python
+
+kubectl get service
+
+#expected output
+NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+kubernetes        ClusterIP   10.96.0.1        <none>        443/TCP     157m
+mongodb-service   ClusterIP   10.105.133.253   <none>        27017/TCP   6m3s
+
+kubectl describe service mongodb-service
+
+kubectl get pod -o wide
+# get the ip address
+```
+
+#### 13. Deployment service and config map
+
+#### this will be reference in the mongo-express.yaml
+
+#### touch mongo-configmap.yaml
+```python
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-configmap
+data:
+  database_url: mongodb-service
+
+#save
+kubectl apply -f mongo-configmap.yaml
+```
+#### touch mongo-express.yaml
+
+```python
+
+piVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+        - containerPort: 8081
+        env:
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+        - name: ME_CONFIG_MONGODB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-configmap
+              key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express-service
+spec:
+  selector:
+    app: mongo-express
+  type: LoadBalancer #final step
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      nodePort: 30000#final step
+
+
+
+kubectl apply -f mongo-express.yaml
+
+kubectl get pod
+
+kubectl logs mongo-express-78fcf796b8-94cv4
+
+```
+
+#### finally to access oour service from a browser
+
+#### final steps added in above step
+
+```python
+kubectl apply -f mongo-express.yaml
+kubectl get service
+#expected output
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes              ClusterIP      10.96.0.1        <none>        443/TCP          3h18m
+mongo-express-service   LoadBalancer   10.103.43.68     <pending>     8081:30000/TCP   15m
+mongodb-service         ClusterIP      10.105.133.253   <none>        27017/TCP        46m
+
+#to assign a public address as it is <pending> we use the
+
+
+ minikube service mongo-express-service
+#expected output
+| NAMESPACE |         NAME          | TARGET PORT |            URL             |
+|-----------|-----------------------|-------------|----------------------------|
+| default   | mongo-express-service |        8081 | http://172.17.50.179:30000
 
 ```
