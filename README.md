@@ -222,5 +222,34 @@ other useful commands
 
 docker exec --help
 
-docker exec -it (container Id)
+docker exec -it (container Id) /bin/bash(or bin/sh)
 ```
+
+## K8
+#### 1.Pod - runs an application container inside of it, its the smallest unit of k8 and abastraction over container. Each Pod has IP address(app and DB use IP to communicate, these are ephemeral(die easy).When the container crushes or the server runs out of resources the pod dies and a new one is set in placeand a new IP is created but for that  a service  is used.
+
+#### 2.Service and Ingress
+#### service is a permanent IP address, life cycle of service and pod are not connected. when pod dies service is still active.
+#### Internal service - for DB (does not traverse the internet)
+#### External service -- secure protocol(https) and domain name ---> request goes to Ingress does forwarding to the service.
+
+#### 3.i.e mongo-db-service (adjust URL in the application and push it to the ) - the endpoint is in the configMap: external configuration
+```python
+
+DB_URL =mongo-db-service.
+mongo-db
+mongo-user
+
+mongo-pwd
+#password should never be in plain text
+#secret base 64 encoded format
+#use ENV variables
+DB_USER = mongo-user
+DB_PWD = mongo-pwd
+
+```
+
+#### 4. Volumes
+#### Data storage if the Pod gets restated the Data disappears. The way to make the data stay is Volumes attaches a physical storage on a hard drive to your Pod and that storage can be on a local machine or remote storage (outside the K8 cluster i.e cloud  or on prem (external ref) then everytime the cluster is restarted the data is loaded)(k8 doesnt manage the data persistance)
+
+#### 5. Deployment
