@@ -231,7 +231,7 @@ docker exec -it (container Id) /bin/bash(or bin/sh)
 #### 2.Service and Ingress
 #### service is a permanent IP address, life cycle of service and pod are not connected. when pod dies service is still active.
 #### Internal service - for DB (does not traverse the internet)
-#### External service -- secure protocol(https) and domain name ---> request goes to Ingress does forwarding to the service.
+#### External service -- secure protocol(https) and domain name ---> request goes to Ingress does forwarding to the service(also acts as a load balancer).
 
 #### 3.i.e mongo-db-service (adjust URL in the application and push it to the ) - the endpoint is in the configMap: external configuration
 ```python
@@ -252,4 +252,14 @@ DB_PWD = mongo-pwd
 #### 4. Volumes
 #### Data storage if the Pod gets restated the Data disappears. The way to make the data stay is Volumes attaches a physical storage on a hard drive to your Pod and that storage can be on a local machine or remote storage (outside the K8 cluster i.e cloud  or on prem (external ref) then everytime the cluster is restarted the data is loaded)(k8 doesnt manage the data persistance)
 
-#### 5. Deployment
+#### 5. Deployment -  have a replica that has the same so that if one goes down, there is one that has the same functionality, you just specify in the #blueprints for how many number of replicas.
+
+#### so Pod is a layer of abstraction, on top of containers. Deployment is another abstraction on top of pods making it convenient to interact with the pods and replicate them and do some other configuration.
+
+#### the DB cannot be replicated using a deployment.StatefulSet is meant for some applications like  databases. Takes care of DB consistency and scaling the db.
+
+#### best practice is to always have DB hosted outside the K8 cluster.
+
+#### 6. Install minikube and kubectl.
+
+#### minicube -open source tool- one node cluster where the master processes and worker processes run on one Node. It runs through a virtual box (one node k8 cluster that runs for testing purposes )
