@@ -262,4 +262,44 @@ DB_PWD = mongo-pwd
 
 #### 6. Install minikube and kubectl.
 
-#### minicube -open source tool- one node cluster where the master processes and worker processes run on one Node. It runs through a virtual box (one node k8 cluster that runs for testing purposes )
+#### minikube -open source tool- one node cluster where the master processes and worker processes run on one Node. It runs through a virtual box (one node k8 cluster that runs for testing purposes )
+
+#### cmdline
+```python
+
+#get the  start going
+minikube start
+
+kubectl help
+
+kubectl get nodes
+#expected output
+minikube ready master
+
+#check pods
+kubectl get pods
+
+#list components
+kubectl get services
+
+#kubectl create nginx Deployment
+kubectl create deployment nginx-depl --image=nginx
+
+kubectl get pod
+#should be up and running
+```
+#### 7.Debugging pods
+
+#### creating the database
+```python
+
+kubectl create deployment mongo-depl --image=mongo
+
+kubectl describe pod [podname]
+
+kubectl get pod
+#will lit the pod ids
+
+kubectl exec -it #podnameID  -- bin/bash 
+#then you will be inside the pod to get a better debugging
+```
