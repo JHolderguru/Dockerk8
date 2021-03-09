@@ -340,4 +340,98 @@ kubectl apply -f nginx-deployment.yaml
 kubectl get pod
 #then there should be more replicas
 
+kubectl get deployments
+
+kubectl delete deployments [name of pods]
+
+
+```
+
+#### 8. mongo db and mongo express POD
+
+#### 9. touch mongo.yaml and enter the following (from the hub)
+```python
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+#to be completed after step 11
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+#to be completed after step 11
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+
+```
+
+####10. the secret file mongo-secret.yaml base code 64
+
+```python
+*important command to run*
+
+echo -n 'username'/*{choiceword}*/ | base64
+#expected similar output
+hfhsSSfhd4bvb=
+
+echo -n 'password'/*{choiceword}*/ | base64
+#expected similar output
+dfgig34ibfbfd=
+
+#save it as mongo-secret.yaml the sceret will be referenced in the deployment.yaml file
+
+# the order is important, so complete the number #9 deployment
+
+```
+
+####11. cd into the folder and run the following commands
+
+```python
+
+kubectl apply -f mongo-secret.yaml
+#expected output secret/mongodb Created
+
+kubectl get secret
+#secret can no be referenced inside the config file ####9
+
+#deployment file is ready
+kubetl apply -f mongo-db-deployment.yaml
+
+
 ```
