@@ -300,6 +300,44 @@ kubectl describe pod [podname]
 kubectl get pod
 #will lit the pod ids
 
-kubectl exec -it #podnameID  -- bin/bash 
+kubectl exec -it #podnameID  -- bin/bash
 #then you will be inside the pod to get a better debugging
+#ls  to list
+#ctrl d to exit the container
+kubectl apply -f
+#takes the config file as a parameter
+# -f file
+
+touch nginx-deployment.yaml
+#use an editor to config
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16
+        ports:
+        - containerPort: 8080
+#save
+
+kubectl apply -f nginx-deployment.yaml
+#kubectl apply -f config-file.yaml
+
+#you can change the deployment to  increase the replicas
+kubectl get pod
+#then there should be more replicas
+
 ```
